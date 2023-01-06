@@ -20,17 +20,22 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@nestjs/axios": "^1.0.1",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/platform-socket.io": "^9.2.1",
     "@nestjs/typeorm": "^9.0.1",
+    "@nestjs/websockets": "^9.2.1",
     "@types/express-handlebars": "^5.3.0",
+    "axios": "^1.2.2",
     "express-handlebars": "^5.3.0",
     "hbs": "^4.2.0",
     "mysql2": "^2.3.3",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
+    "socket.io": "^4.5.4",
     "typeorm": "^0.3.11"
   },
   "devDependencies": {

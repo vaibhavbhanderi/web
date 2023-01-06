@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  OneToMany,
+} from 'typeorm';
+import { Chat } from './chat.entity';
 
 @Entity()
 export class User {
@@ -16,4 +23,7 @@ export class User {
 
   @CreateDateColumn()
   createAt: Date;
+
+  @OneToMany(() => Chat, (chat) => chat.user, { eager: true })
+  Members: Chat[];
 }

@@ -9,13 +9,17 @@ import {
   Res,
   Req,
   Render,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
+
 import { UpdateUserDto } from './dto/update-user.dto';
-import { Request } from 'express';
+import { Request, Response } from 'express';
+import { createchatdto } from './dto/create-chat.dto';
+
 @Controller()
 export class UsersController {
+  [x: string]: any;
   constructor(private readonly usersService: UsersService) {}
   @Get()
   @Render('home')
@@ -25,27 +29,36 @@ export class UsersController {
 
   @Post('/adduser')
   @Render('login')
-
   create(
     @Req()
     request: Request,
   ) {
-    // console.log(
-    //   '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',
-    //   request.body,
-    // );
-
+    // console.log(request.body);
     return this.usersService.create(request.body);
   }
 
-  @Get()
-  findAll() {
-    return this.usersService.findAll();
+  @Post('/userlogin')
+  @Render('message')
+  Userlogin(
+    @Req()
+    request: Request,
+    response: Response,
+  ) {
+    return this.usersService.finduser(request.body, response);
+  }
+  @Post(':id/chat')
+  async createUserchat(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() createUserchatdto: createchatdto,
+  ) {
+    return this.usersService.createUserChat(id, createUserchatdto);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  @Post(':userid')
+  async findmember(@Param('userid', ParseIntPipe) userid: number) {
+    // console.log(userid);
+
+    return this.usersService.findMember(userid);
   }
 
   @Patch(':id')
@@ -56,5 +69,9 @@ export class UsersController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
+  }
+  @Get('userget')
+  getUsers() {
+    return this.usersService.allUser();
   }
 }
