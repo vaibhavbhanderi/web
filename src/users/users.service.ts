@@ -6,12 +6,13 @@ import {
   Render,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateChatParams } from 'src/utity/types';
+import { CreateChatParams, CreateMessageParams } from 'src/utity/types';
 
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Chat } from './entities/chat.entity';
+import { Message } from './entities/message.entity';
 
 import { User } from './entities/user.entity';
 
@@ -21,6 +22,7 @@ export class UsersService {
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
     @InjectRepository(Chat) private ChatRepository: Repository<Chat>,
+    @InjectRepository(Message) private MessageRepository: Repository<Message>,
   ) {}
   create(body: CreateUserDto) {
     let user: User = new User();
@@ -84,6 +86,22 @@ export class UsersService {
       },
     });
     return member;
+  }
+
+  async createUserMessage(
+    id: number,
+    createusermessagedetails: CreateMessageParams,
+  ) {
+    const chat = await this.ChatRepository.findOneBy({ id });
+    if (!chat)
+      throw new HttpException(
+        'User not found cannot create message>>>>>>>>>>>',
+        HttpStatus.BAD_REQUEST,
+      );
+    const newMessage = this.MessageRepository.create({
+      ...createusermessagedetails
+    });
+    return this.ChatRepository.save(newMessage);
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

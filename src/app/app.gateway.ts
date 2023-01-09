@@ -23,7 +23,7 @@ export class AppGateway implements OnGatewayConnection, OnGatewayDisconnect {
     console.log(`disconnect ${client.id}`);
   }
   handleConnection(client: Socket, ...args: any[]) {
-    console.log(`Connectention ${client.id}`);
+    console.log(`Connectention >>>>>>>>>>> ${client.id}`);
     client.on('newuserjoin', (name) => {
       const aa = (users[client.id] = name);
       console.log(aa);
@@ -37,7 +37,9 @@ export class AppGateway implements OnGatewayConnection, OnGatewayDisconnect {
   handleMessage(client: any, payload: any): string {
     return 'Hello world!';
   }
+
+  // privet user to user chat
+
+  
+  
 }
-
-
-

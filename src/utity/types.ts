@@ -3,3 +3,9 @@ export type CreateChatParams = {
   Senderid: string;
   Receiverid: string;
 };
+
+export type CreateMessageParams = {
+    conversationid: string;
+    sender: string;
+    text: string;
+};

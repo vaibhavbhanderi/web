@@ -16,11 +16,13 @@ import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Request, Response } from 'express';
 import { createchatdto } from './dto/create-chat.dto';
+import { createmessagedto } from './dto/create-message.dto';
 
 @Controller()
 export class UsersController {
   [x: string]: any;
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService ) {}
   @Get()
   @Render('home')
   Index() {
@@ -59,6 +61,14 @@ export class UsersController {
     // console.log(userid);
 
     return this.usersService.findMember(userid);
+  }
+
+  @Post(':id/message')
+  async createUsermessage(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() createmessagedto:createmessagedto,
+  ) {
+    return this.usersService.createUserMessage(id, createmessagedto);
   }
 
   @Patch(':id')

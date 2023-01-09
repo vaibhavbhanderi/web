@@ -1,9 +1,10 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Chat } from './chat.entity';
 
 @Entity()
 export class Message {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
   @Column()
   conversationid: string;
   @Column()
@@ -12,4 +13,6 @@ export class Message {
   text: string;
   @Column()
   creteAt: Date;
+//   @ManyToOne(() => Chat, (chat) => chat.Messages)
+//   Message: Chat;
 }

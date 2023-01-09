@@ -68,10 +68,12 @@ form.addEventListener('submit', (e) => {
 
 function myfunction(id) {
   const name = document.getElementById(id).innerText;
+  document.getElementById('myname').innerHTML = name;
   // console.log(name);
   const newuser = socket.emit('newuserjoin', name);
 }
 socket.on('userjoinevent', (name) => {
   console.log(`name`, name);
-});
+
+}); 
 
